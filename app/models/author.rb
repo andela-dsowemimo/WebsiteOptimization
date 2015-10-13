@@ -1,5 +1,11 @@
 class Author < ActiveRecord::Base
+  after_update :expire_cache_fragment
+  # after_create
+  # after_destroy
+
   has_many :articles
+
+  default_scope { includes(:articles) }
 
   def self.generate_authors(count=1000)
     count.times do
@@ -18,5 +24,9 @@ class Author < ActiveRecord::Base
         art.upvotes
       end.last
     end.last.name
+  end
+
+  def expire_cache_fragment
+    ActionController::Base.new.expire_fragment(self)
   end
 end
