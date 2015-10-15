@@ -1,7 +1,4 @@
 class Author < ActiveRecord::Base
-  after_update :expire_cache_fragment
-  # after_create
-  # after_destroy
 
   has_many :articles
 
@@ -15,7 +12,7 @@ class Author < ActiveRecord::Base
   end
 
   def self.most_prolific_writer
-    all.sort_by{|a| a.articles.count }.last
+    order("articles_count").last
   end
 
   def self.with_most_upvoted_article
@@ -24,9 +21,14 @@ class Author < ActiveRecord::Base
         art.upvotes
       end.last
     end.last.name
+    # order("upvotes").last.name
   end
-
-  def expire_cache_fragment
-    ActionController::Base.new.expire_fragment(self)
-  end
+  #
+  # def expire_author(author)
+  #   expire_cache_for(author)
+  # end
+  #
+  # def expire_page
+  #   expire_fragment("all-authors-page-#{page_number}")
+  # end
 end

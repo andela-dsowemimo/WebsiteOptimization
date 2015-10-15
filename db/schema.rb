@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013084526) do
+ActiveRecord::Schema.define(version: 20151014095758) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "name"
@@ -22,10 +22,13 @@ ActiveRecord::Schema.define(version: 20151013084526) do
     t.integer  "upvotes"
   end
 
+  add_index "articles", ["upvotes"], name: "index_articles_on_upvotes"
+
   create_table "authors", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "articles_count", default: 0
   end
 
   add_index "authors", ["id"], name: "index_authors_on_id"

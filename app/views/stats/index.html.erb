@@ -10,7 +10,9 @@
 
   <p style="text-decoration: underline">List of all the article names (TOO LONG)</p>
   <%= paginate @article_names %>
-    <% @article_names.each do |article| %>
+  <% cache @article_names do %>
+    <% @article_names.find_each(batch_size: 30) do |article| %>
       <li><%= article.name %></li>
     <% end %>
+  <% end %>
 </div>
