@@ -1,12 +1,16 @@
-<%= form_for @comment do |f| %>
-  <%= f.label :author %>
-  <%= f.text_field :author %>
-  <br>
+<div class="container">
+  <div class="row center_text">
+    <%= form_for @comment do |f| %>
+      <%= f.label :author %>
+      <%= f.text_field :author %>
+      <br>
 
-  <%= f.label :body %>
-  <%= f.text_area :body, size: "60x12" %>
+      <%= f.label :body %>
+      <%= f.text_area :body, size: "60x12" %>
 
-  <%= f.hidden_field :article, value: @article.id %>
-  
-  <%= f.submit "Create" %>
-<% end %>
+      <%= f.hidden_field :article, value: @article.id %>
+
+      <p><%= f.submit "Create Comment", class: "btn btn-primary" %></p>
+    <% end %>
+  </div>
+</div>

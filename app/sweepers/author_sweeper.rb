@@ -7,8 +7,6 @@ class AuthorSweeper < ActionController::Caching::Sweeper
 
   def after_destroy(author)
     expire_cache_for(author)
-    #expire cache for that page
-    #expire cache for other pages after
   end
 
   def after_create(author)

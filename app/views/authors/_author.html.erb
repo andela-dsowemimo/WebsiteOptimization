@@ -1,6 +1,15 @@
-<% cache author do%>
-  <h2>My name is <%= author.name %></h2>
-  <% author.articles.find_each(batch_size: 30) do |article| %>
-    <p>I wrote: <span style="text-decoration: underline"><%= link_to article.name, articles_show_path(article) %> </span></p>
-  <% end %>
-<% end %>
+
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <%= image_tag("unknown-person") %>
+      <div class="caption">
+        <% cache author do%>
+          <h3 class="center_text">My name is <%= author.name %></h3>
+          <p class="center_text">Articles written by me</p>
+          <% author.articles.each do |article| %>
+            <p class="center_text"><span style="text-decoration: underline"><%= link_to article.name, articles_show_path(article) %> </span></p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>

@@ -37,8 +37,14 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.3)
+    autoprefixer-rails (6.0.2)
+      execjs
+      json
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.3.5.1)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.3.0)
     builder (3.2.2)
     bullet (4.14.5)
       activesupport (>= 3.0.0)
@@ -58,6 +64,8 @@ GEM
     fabrication (2.2.3)
     faker (1.5.0)
       i18n (~> 0.5)
+    font-awesome-sass (4.4.0)
+      sass (>= 3.2)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     i18n (0.7.0)
@@ -76,8 +84,6 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    materialize-sass (0.97.0)
-      sass (~> 3.3)
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_portile (0.6.2)
@@ -175,14 +181,16 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
+  bootstrap-sass
   bullet
   coffee-rails (~> 4.1.0)
   fabrication
   faker
+  font-awesome-sass
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
-  materialize-sass
   pry
   pry-nav
   rails (= 4.2.3)

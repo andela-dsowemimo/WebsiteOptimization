@@ -1,11 +1,22 @@
-<h1> This is a terrible authors index page. One of the worst ever. </h1>
+<div class="container">
+  <div class="row">
+  <h1 class="center_text"> This is a terrible authors index page. One of the worst ever. </h1>
+  <nav class="center_text">
+    <h3><%= link_to "Statistics", stats_index_path, class: "btn btn-primary btn-lg" %></h3>
+  </nav>
+  </div>
+</div>
 
-<nav style="background-color: #9AEEE8">
-  <%= link_to "Stats", stats_index_path %>
-</nav>
+<div class="author container">
+  <div class="row center_text">
+    <%= paginate @authors %>
+  </div>
 
-<div class="author">
-
-  <%= paginate @authors %>
+  <div class="row">
     <%= render @authors %>
+  </div>
+
+  <div class="row paginate-alignment center_text">
+    <%= paginate @authors %>
+  </div>
 </div>

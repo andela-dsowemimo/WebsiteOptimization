@@ -14,21 +14,4 @@ class Author < ActiveRecord::Base
   def self.most_prolific_writer
     order("articles_count").last
   end
-
-  def self.with_most_upvoted_article
-    all.sort_by do |auth|
-      auth.articles.sort_by do |art|
-        art.upvotes
-      end.last
-    end.last.name
-    # order("upvotes").last.name
-  end
-  #
-  # def expire_author(author)
-  #   expire_cache_for(author)
-  # end
-  #
-  # def expire_page
-  #   expire_fragment("all-authors-page-#{page_number}")
-  # end
 end
