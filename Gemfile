@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 gem 'rails', '4.2.3'
-gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
@@ -11,14 +10,19 @@ gem 'kaminari'
 gem 'bootstrap-sass'
 gem 'font-awesome-sass'
 gem 'autoprefixer-rails'
+gem 'fabrication'
+gem 'faker'
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'pry'
   gem 'pry-nav'
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem 'fabrication'
-  gem 'faker'
   gem 'rspec-rails', '~> 3.3.3'
   gem 'bullet'
+end
+
+group :production do
+  gem 'pg'
 end
