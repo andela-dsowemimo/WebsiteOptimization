@@ -8,8 +8,4 @@ class AuthorSweeper < ActionController::Caching::Sweeper
   def after_destroy(author)
     expire_cache_for(author)
   end
-
-  def after_create(author)
-
-  end
 end

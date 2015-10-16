@@ -43,87 +43,48 @@ end
 
 ##### Index some columns.
 
-[great explanation of how to index columns and when](http://tutorials.jumpstartlab.com/topics/performance/queries.html#indices)
-
-Our non-performant app has many opportunities to index. Just look at our associations. There are many foreign keys in our database...
+Our non-performant app has many opportunities to index. Just look at our associations. By adding index to some columns that are used for searches it makes searched faster. Adding index to the author ID makes it easy to search for authors.
 
 ```ruby
-class Article < ActiveRecord::Base
-  belongs_to :author
-  has_many :comments
+class AddIndexOnIdToAuthors < ActiveRecord::Migration
+  def change
+    add_index :authors, :id
+  end
 end
 ```
 
-##### Ruby vs ActiveRecord
+##### Caching and Sweepers
 
-Let's try to get some ids from our Article model.
-
-Look at Ruby:
-
-```ruby
-puts Benchmark.measure {Article.select(:id).collect{|a| a.id}}
-  Article Load (2.6ms)  SELECT "articles"."id" FROM "articles"
-  0.020000   0.000000   0.020000 (  0.021821)
-```
-
-The real time is 0.021821 for the Ruby query.
-
-vs ActiveRecord
-
-```ruby
-puts Benchmark.measure {Article.pluck(:id)}
-   (3.2ms)  SELECT "articles"."id" FROM "articles"
-  0.000000   0.000000   0.000000 (  0.006992)
-```
-The real time is 0.006992 for the AR query. Ruby is about 300% slower.
-
-For example, this code is terribly written in the Author model:
-
-```ruby
-def self.most_prolific_writer
-  all.sort_by{|a| a.articles.count }.last
-end
-
-def self.with_most_upvoted_article
-  all.sort_by do |auth|
-    auth.articles.sort_by do |art|
-      art.upvotes
-    end.last
-  end.last
-end
-```
-
-Both methods use Ruby methods (sort_by) instead of ActiveRecord. Let's fix that.
-
-##### html_safe makes it unsafe or safe?.
-
-This is why variable and method naming is important.
-
-In the show.html.erb for articles, we have this code
-
-```ruby
-  <% @articles.comments.each do |com| % >
-    <%= com.body.html_safe %>
-  <% end %>
-```
-
-What's wrong with it?
-
-The danger is if comment body are user-generated input...which they are.
-
-See [here](http://stackoverflow.com/questions/4251284/raw-vs-html-safe-vs-h-to-unescape-html)
-
-Understand now? Fix the problem.
-
-
-##### Caching
-
-Our main view currently takes 4 seconds to load
+Our main view currently takes 4 seconds to load. This is because making database calls can be quite expensive especially when dealing with a lot of data. This is bad for performance.
 
 ```bash
 Rendered author/index.html.erb within layouts/application (5251.7ms)
 Completed 200 OK in 5269ms (Views: 4313.1ms | ActiveRecord: 955.6ms)
 ```
 
-Let's fix that. Read this:
-[fragment caching](http://guides.rubyonrails.org/caching_with_rails.html#fragment-caching)
+We can improve on this by using caching, which will serve as an alternative to making these expensive database calls.
+```ruby
+<% cache author do %>
+  <h3 class="center_text">My name is <%= author.name %></h3>
+  <p class="center_text">Articles written by me</p>
+  <% author.articles.each do |article| %>
+    <p class="center_text"><span style="text-decoration: underline"><%= link_to article.name, "articles/#{article.id}" %> </span></p>
+  <% end %>
+<% end %>
+```
+
+
+Using Sweepers, we can observe the states of an object for a change to expire a cache.
+```ruby
+class AuthorSweeper < ActionController::Caching::Sweeper
+  observe Author
+
+  def after_update(author)
+    expire_cache_for(author)
+  end
+
+  def after_destroy(author)
+    expire_cache_for(author)
+  end
+end
+```
