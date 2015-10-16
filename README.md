@@ -88,3 +88,9 @@ class AuthorSweeper < ActionController::Caching::Sweeper
   end
 end
 ```
+
+The site can be viewed [Here](https://enigmatic-woodland-7776.herokuapp.com/)
+
+#Copyright
+
+Copyright (c) 2015, Daisi Sowemimo, Andela
