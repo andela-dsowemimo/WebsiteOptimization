@@ -1,11 +1,7 @@
 # Website Optimization
 
 Retrieving data can sometimes be expensive. If this retrieval process is not handled properly it can lead to slow and very long load times which can lead to bad user experience.
-This project aims to improve the data retrieval and various load times of a poorly designed website using caching, efficient queries and techniques.
-
-```bash
-git clone git@github.com:andela/checkpoint_rails_worst_app.git
-```
+This project aims to improve the data retrieval and various load times of a poorly designed website using caching, indexing, efficient queries and techniques.
 
 ### This is one of the worst performing Rails apps ever.
 
@@ -28,23 +24,20 @@ Rendered stats/index.html.erb within layouts/application (9.9ms)
 Completed 200 OK in 16197ms (Views: 38.0ms | ActiveRecord: 4389.4ms)
 ```
 
-It took 16 seconds to load and a lot of the time taken isn't even in the ActiveRecord querying or the view. It's the creation of ruby objects that is taking a lot of time. This will be explained in further detail below.
+It took 16 seconds to load and a lot of the time taken isn't even in the ActiveRecord querying or the view. It's the creation of ruby objects that is taking a lot of time.
 
-So, **What can we do?**
+Thsi can be improved by replacing ruby methods with ActiveRecord querying
+Replacing code like
+```ruby
+def self.most_prolific_writer
+  all.sort_by{|a| a.articles.count }.last
+end
 
-Well, let's focus on improving the view and the AR querying first!
+def self.most_prolific_writer
+  order("articles_count").last
+end
 
-Complete this tutorial first:
-[Jumpstart Lab Tutorial on Querying](http://tutorials.jumpstartlab.com/topics/performance/queries.html)
-
-# Requirements for this checkpoint
-* add an index to the correct columns
-* implement eager loading vs lazy loading on the right pages.
-* replace Ruby lookups with ActiveRecord methods.
-* fix html_safe issue.
-* page cache or fragment cache the root page.
-* No need for testing, but you need to get the time down to a reasonable time for both pages.
-* The root page needs to implement includes, pagination, and fragment caching.
+```
 
 ##### Index some columns. But what should we index?
 
