@@ -1,15 +1,30 @@
-<h1>Some of the most inefficient ActiveRecord Querying ever.</h1>
+<div class="container">
+  <div class="row">
+    <h1>Some of the most inefficient ActiveRecord Querying ever.</h1>
+  </div>
+</div>
 
-<div class="stats-section">
-  <div>Most prolific author: <%= @prolific_author.name %> </div>
-  <div>Author with most upvoted article: <%= @author_with_most_upvoted_article %> </div>
-  <p style="text-decoration: underline">Five longest article names:</p>
-  <% @five_longest_article_names.each do |name| %>
-    <li> <%= name %> </li>
-  <% end %>
+<div class="container">
+  <div class="row">
+    <div class="stats-section">
+      <div>Most prolific author: <%= @prolific_author.name %> </div>
+      <div>Author with most upvoted article: <%= @author_with_most_upvoted_article %> </div>
+      <p style="text-decoration: underline">Five longest article names:</p>
+      <% @five_longest_article_names.each do |name| %>
+        <li> <%= name %> </li>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-  <p style="text-decoration: underline">List of all the article names (TOO LONG)</p>
-  <% @article_names.each do |name| %>
-    <li><%= name %></li>
-  <% end %>
+<div class="container">
+  <div class="row">
+    <h3 style="text-decoration: underline">List of all the article names (TOO LONG)</h3>
+    <%= paginate @article_names %>
+    <% cache @article_names do %>
+      <% @article_names.each do |article| %>
+        <li><%= article.name %></li>
+      <% end %>
+    <% end %>
+  </div>
 </div>

@@ -1,6 +1,7 @@
-# Andela Rails Checkpoint #3
+# Website Optimization
 
-1. Git clone this app and follow the instructions below.
+Retrieving data can sometimes be expensive. If this retrieval process is not handled properly it can lead to slow and very long load times which can lead to bad user experience.
+This project aims to improve the data retrieval and various load times of a poorly designed website using caching, efficient queries and techniques.
 
 ```bash
 git clone git@github.com:andela/checkpoint_rails_worst_app.git
