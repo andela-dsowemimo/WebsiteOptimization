@@ -12,6 +12,7 @@ gem 'font-awesome-sass'
 gem 'autoprefixer-rails'
 gem 'fabrication'
 gem 'faker'
+gem 'turbolinks'
 
 group :development, :test do
   gem 'sqlite3'
