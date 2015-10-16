@@ -39,7 +39,7 @@ end
 
 ```
 
-##### Index some columns. But what should we index?
+##### Index some columns.
 
 [great explanation of how to index columns and when](http://tutorials.jumpstartlab.com/topics/performance/queries.html#indices)
 
